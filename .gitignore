@@ -87,3 +87,10 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# godmd test stuff
+sensitivity_analysis/*.REF.pdb
+sensitivity_analysis/*.err
+sensitivity_analysis/*.sh
+sensitivity_analysis/*.log
+sensitivity_analysis/*.out
