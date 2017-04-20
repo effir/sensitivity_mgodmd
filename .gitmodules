@@ -1,3 +1,3 @@
 [submodule "mutated-godmd"]
 	path = mutated-godmd
-	url = https://github.com/psfriso/mutated-godmd.git
+	url = https://github.com/effir/mutated-godmd.git
