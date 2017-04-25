@@ -17,6 +17,8 @@ def void_caller(path, call, ref_prot, obj_prot):
         call_mut = call + ['-touch', mut, '-ener', en, '-trj', trj, '-o', out]
         print('Calling {}'.format(call_mut))  # debug 2
         subprocess.call(call_mut)
+        if os.path.isfile('gmon.out'):
+            os.remove('gmon.out')
 
 
 def main(base, analysis_path, ref_prot, obj_prot):
