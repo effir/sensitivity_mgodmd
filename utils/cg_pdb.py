@@ -21,6 +21,7 @@ def read_cg_pdb(path):
 
 
 def residue_at_less_than(pdb, pdb_resi, cutoff=10):
+    pdb_resi = int(pdb_resi)
     n = pdb_resi - 1
     npos = pdb[n]
     dist_vs_npos = lambda x: np.linalg.norm(x-npos)

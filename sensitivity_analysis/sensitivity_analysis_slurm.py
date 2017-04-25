@@ -36,13 +36,12 @@ def read_params(path):
     d = {}
     with open(path) as f:
         for line in f:
-            ref, obj, path = line.strip().split(',')
-            d[ref] = (obj, path)
-
+            ref, obj, path, cgpdbname = line.strip().split(',')
+            d[ref] = (obj, path, os.path.join(path, cgpdbname))
     return d
 
 
-def prepare_sbatch(path, protein, objprotein, q, factor, window):
+def prepare_sbatch(path, protein, objprotein, cgpdbpath, q, factor, window):
     for a in range(100):
         batch_file = '{}{}.sh'.format(protein, a)
         if os.path.isfile(batch_file):
@@ -50,8 +49,7 @@ def prepare_sbatch(path, protein, objprotein, q, factor, window):
         n = a
         break
 
-    command = pmd.prepare_sensitivity(path, protein, objprotein,
-            window=window, factor=factor)
+    command = pmd.prepare_sensitivity(path, protein, objprotein, cgpdbpath, window=window, factor=factor)
 
     if not command:
         # some mistake on prepare_sensitivity
@@ -84,12 +82,12 @@ def main(param, queue, factor, window):
     window = int(window)
 
     for k in d.keys():
-        obj, path = d[k]
+        obj, path, cgpdbpath = d[k]
         if not(os.path.isdir(path)):
             print('path {} for protein {} not found'.format(path, k))
             continue
 
-        runner = prepare_sbatch(path, k, obj, queue, factor, window)
+        runner = prepare_sbatch(path, k, obj, cgpdbpath, queue, factor, window)
         if not runner:
             continue
         subprocess.call(['sbatch', runner])
